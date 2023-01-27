@@ -42,5 +42,9 @@ public class KakaoMessageDTO {
     private String scheduleCode;
 
     // kakao button
-    private List<ButtonDTO> buttonDTOList;
+    private String buttonTitle;
+
+    private String buttonUrl;
+
+    private ButtonType buttonType;
 }
