@@ -8,16 +8,11 @@ import lombok.NoArgsConstructor;
 import shop.rns.kakaobroker.config.status.MessageStatus;
 import shop.rns.kakaobroker.config.type.ButtonType;
 
-import javax.persistence.Embedded;
-import java.util.List;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class KakaoMessageDTO {
-    private long messageId;
-
+public class KakaoMessageDto {
     private String from;
 
     @JsonIgnore
@@ -35,16 +30,13 @@ public class KakaoMessageDTO {
 
     private MessageStatus messageStatus;
 
-    @JsonIgnore
-    private String reserveTime;
-
-    @JsonIgnore
-    private String scheduleCode;
-
-    // kakao button
     private String buttonTitle;
 
     private String buttonUrl;
 
     private ButtonType buttonType;
+
+    private String cronExpression;
+
+    private String cronText;
 }

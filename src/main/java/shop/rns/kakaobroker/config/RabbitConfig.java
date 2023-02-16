@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.naming.directory.DirContext;
 
 import static shop.rns.kakaobroker.utils.rabbitmq.RabbitUtil.*;
+import static shop.rns.kakaobroker.utils.rabbitmq.RabbitUtil.WORK_TTL;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +57,7 @@ public class RabbitConfig {
         Map<String, Object> args = new HashMap<>();
         args.put("x-dead-letter-exchange", DLX_EXCHANGE_NAME);
         args.put("x-dead-letter-routing-key", KE_WAIT_ROUTING_KEY);
+        args.put("x-message-ttl", WORK_TTL);
         return new Queue(KE_WORK_QUEUE_NAME, true, false, false, args);
     }
 
@@ -67,7 +69,7 @@ public class RabbitConfig {
     @Bean
     public Queue kakaoWaitKEQueue() {
         Map<String, Object> args = new HashMap<>();
-        args.put("x-message-ttl", WAIT_TTL);
+//        args.put("x-message-ttl", WAIT_TTL);
         args.put("x-dead-letter-exchange", KAKAO_EXCHANGE_NAME);
         args.put("x-dead-letter-routing-key", KE_WORK_ROUTING_KEY);
 
@@ -83,7 +85,6 @@ public class RabbitConfig {
                 .with(KE_WORK_ROUTING_KEY);
     }
 
-
     @Bean
     public Binding bindingKakaoReceiveKE(DirectExchange kakaoReceiveExchange, Queue kakaoReceiveKEQueue){
         return BindingBuilder.bind(kakaoReceiveKEQueue)
@@ -92,9 +93,9 @@ public class RabbitConfig {
     }
 
     @Bean
-    public Binding bindingKakaoDlxKE(DirectExchange kakaoDlxExchange, Queue kakaoWaitKEQueue){
+    public Binding bindingKakaoDlxKE(DirectExchange dlxKakaoExchange, Queue kakaoWaitKEQueue){
         return BindingBuilder.bind(kakaoWaitKEQueue)
-                .to(kakaoDlxExchange)
+                .to(dlxKakaoExchange)
                 .with(KE_WAIT_ROUTING_KEY);
     }
 }

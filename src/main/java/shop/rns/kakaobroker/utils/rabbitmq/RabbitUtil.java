@@ -1,6 +1,8 @@
 package shop.rns.kakaobroker.utils.rabbitmq;
 
 public class RabbitUtil {
+    public static final int WORK_TTL = 5 * 1000;
+
 
     // EXCHANGE
     public static final String KAKAO_EXCHANGE_NAME = "dx.kakao.work";
@@ -17,12 +19,9 @@ public class RabbitUtil {
     public static final String KE_WAIT_QUEUE_NAME = "q.kakao.ke.wait";
 
     // Routing Key
-    public static final String KE_WORK_ROUTING_KEY = "kakao.send.ke";
+    public static final String KE_WORK_ROUTING_KEY = "kakao.work.ke";
     public static final String KE_RECEIVE_ROUTING_KEY = "kakao.receive.ke";
     public static final String KE_WAIT_ROUTING_KEY = "kakao.wait.ke";
-
-    // DLX Routing key
-    public static final String CNS_WAIT_ROUTING_KEY = "kakao.wait.cns";
 
     public static final int WAIT_TTL = 3000;
 }
